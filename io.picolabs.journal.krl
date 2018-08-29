@@ -29,7 +29,7 @@ ruleset io.picolabs.journal {
     
   }
   
-  rule discovery { select when manifold apps send_directive("app discovered...", {"app": app, "rid": meta:rid, "bindings": bindings(), "iconURL": "http://www.clker.com/cliparts/l/H/M/1/l/G/red-journal-with-pencil.svg.med.png"} ); }
+  rule discovery { select when manifold apps send_directive("app discovered...", {"app": app, "rid": meta:rid, "bindings": bindings(), "iconURL": "https://image.flaticon.com/icons/svg/201/201642.svg"} ); }
   
   
   rule new_entry {
