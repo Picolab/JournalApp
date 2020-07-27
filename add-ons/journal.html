@@ -8,6 +8,10 @@
 $(document).ready(function () {
   $('input.js-initial-focus:first').focus()
   var eci = location.search.substring(1)
+  $.getJSON('/sky/cloud/'+eci+'/io.picolabs.visual_params/dname',function(d){
+    $('h1').html(d)
+    document.title = d
+  })
   var formToJSON = function (form) {
     var json = {}
     $.each($(form).serializeArray(), function (key, elm) {
@@ -45,6 +49,7 @@ label {
     </style>
   </head>
   <body>
+    <h1>Journal entry</h1>
     <form class="js-ajax-form">
       <label>Reading:</label>
       <input class="js-initial-focus" name="title" type="number" min="0" max="999" required="">
