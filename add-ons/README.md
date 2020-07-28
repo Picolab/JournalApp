@@ -29,3 +29,9 @@ This is similar to the technique described in the
 "[Using a Google sheet to record data from a pico](https://picolabs.atlassian.net/wiki/spaces/docs/pages/650182695/Using+a+Google+sheet+to+record+data+from+a+pico)"
 page from the Pico Labs documentation.
 
+## Code that runs inside the spreadsheet
+
+Included here for completeness. You could reconstruct it from the documentation, but here it is.
+You'll notice that it expects a tab named "2020" in the spreadsheet.
+That can be changed to whatever you want.
+Notice also that the data names match those provided from the recorder ruleset.
