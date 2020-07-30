@@ -7,7 +7,7 @@
     <script type="text/javascript">
 $(document).ready(function () {
   $('input.js-initial-focus:first').focus()
-  var eci = location.search.substring(1)
+  var eci = location.hash.substring(1)
   $.getJSON('/sky/cloud/'+eci+'/io.picolabs.visual_params/dname',function(d){
     $('h1').html(d)
     document.title = d
