@@ -7,7 +7,12 @@
     <script type="text/javascript">
 $(document).ready(function () {
   $('input.js-initial-focus:first').focus()
-  var eci = location.hash.substring(1)
+  var eci // required
+  if(location.hash){
+    eci = location.hash.substring(1)
+  }else{
+    eci = prompt('ECI')
+  }
   $.getJSON('/sky/cloud/'+eci+'/io.picolabs.visual_params/dname',function(d){
     $('h1').html(d)
     document.title = d
@@ -63,3 +68,4 @@ label {
     <div id="entries"><pre></pre></div>
   </body>
 </html>
+
