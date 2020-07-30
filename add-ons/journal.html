@@ -6,7 +6,24 @@
     <script src="js/jquery-3.1.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 $(document).ready(function () {
-  $('input.js-initial-focus:first').focus()
+  var displayEntries = function(d) {
+    var index = d.length
+    while(index > 0){
+      --index
+      $('#entries pre').append(
+        d[index].timestamp + ' ' +
+        d[index].title + ' ' +
+        d[index].content + '\r\n')
+    }
+  }
+  var formToJSON = function (form) {
+    var json = {}
+    $.each($(form).serializeArray(), function (key, elm) {
+      json[elm.name] = elm.value
+    })
+    return json
+  }
+
   var eci // required
   if(location.hash){
     eci = location.hash.substring(1)
@@ -16,30 +33,18 @@ $(document).ready(function () {
   $.getJSON('/sky/cloud/'+eci+'/io.picolabs.visual_params/dname',function(d){
     $('h1').html(d)
     document.title = d
-  })
-  var formToJSON = function (form) {
-    var json = {}
-    $.each($(form).serializeArray(), function (key, elm) {
-      json[elm.name] = elm.value
+    $.getJSON('/sky/cloud/'+eci+'/io.picolabs.journal/getEntry',displayEntries)
+    $('input.js-initial-focus:first').focus()
+    $('body').find('.js-ajax-form').submit(function (e) {
+      e.preventDefault()
+      var url = '/sky/event/'+eci+'/reading/journal/new_entry'
+      $.getJSON(url, formToJSON(this), function () {
+        location.reload()
+      })
     })
-    return json
-  }
-  $.getJSON('/sky/cloud/'+eci+'/io.picolabs.journal/getEntry',function(d){
-    var index = d.length
-    while(index > 0){
-      --index
-      $('#entries pre').append(
-        d[index].timestamp + ' ' +
-        d[index].title + ' ' +
-        d[index].content + '\r\n')
-    }
   })
-  $('body').find('.js-ajax-form').submit(function (e) {
-    e.preventDefault()
-    var url = '/sky/event/'+eci+'/reading/journal/new_entry'
-    $.getJSON(url, formToJSON(this), function () {
-      location.reload()
-    })
+  .fail(function(e){
+    $('body').html('<div>need a valid ECI</div>')
   })
 })
     </script>
