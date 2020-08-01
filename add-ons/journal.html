@@ -36,9 +36,11 @@ $(document).ready(function () {
     $.getJSON('/sky/cloud/'+eci+'/io.picolabs.journal/getEntry',displayEntries)
     $('input.js-initial-focus:first').focus()
     $('body').find('.js-ajax-form').submit(function (e) {
+      var number = this.title.value
       e.preventDefault()
       var url = '/sky/event/'+eci+'/reading/journal/new_entry'
       $.getJSON(url, formToJSON(this), function () {
+        alert('Recorded this: '+number)
         location.reload()
       })
     })
