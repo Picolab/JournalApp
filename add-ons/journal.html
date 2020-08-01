@@ -34,6 +34,7 @@ $(document).ready(function () {
     $('h1').html(d)
     document.title = d
     $.getJSON('/sky/cloud/'+eci+'/io.picolabs.journal/getEntry',displayEntries)
+      .fail(function(e){alert(e.responseJSON.error)})
     $('input.js-initial-focus:first').focus()
     $('body').find('.js-ajax-form').submit(function (e) {
       var number = this.title.value
