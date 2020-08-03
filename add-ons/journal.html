@@ -48,17 +48,21 @@ $(document).ready(function () {
   $.getJSON('/sky/cloud/'+eci+'/io.picolabs.visual_params/dname',function(d){
     $('h1').html(d)
     document.title = d
-    $.getJSON('/sky/cloud/'+eci+'/io.picolabs.journal/getEntry',displayEntries)
+    var getEntryURL = '/sky/cloud/'+eci+'/io.picolabs.journal/getEntry'
+    $.getJSON(getEntryURL,displayEntries)
       .fail(function(e){alert(e.responseJSON.error)})
     $('input.js-initial-focus:first').focus()
     $('body').find('.js-ajax-form').submit(function (e) {
-      var number = this.title.value
+      var the_form = this
       e.preventDefault()
       cursor_wait()
       var url = '/sky/event/'+eci+'/reading/journal/new_entry'
       $.getJSON(url, formToJSON(this), function () {
+        $('#entries pre').html('')
+        $.getJSON(getEntryURL,displayEntries)
+        the_form.reset()
+        the_form.title.focus()
         remove_cursor_wait()
-        location.reload()
       })
     })
   })
