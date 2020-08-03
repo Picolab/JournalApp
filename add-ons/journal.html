@@ -6,6 +6,21 @@
     <script src="js/jquery-3.1.0.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 $(document).ready(function () {
+  var cursor_wait = function(){
+    var elements = $(':hover')
+    if(elements.length){
+      elements.last().addClass('cursor-wait')
+    }
+    $('html')
+    .off('mouseover.cursorwait')
+    .on('mouseover.cursorwait',function(e){
+      $(e.target).addClass('cursor-wait')
+    })
+  }
+  var remove_cursor_wait = function(){
+    $('html').off('mouseover.cursorwait')
+    $('.cursor-wait').removeClass('cursor-wait')
+  }
   var displayEntries = function(d) {
     var index = d.length
     while(index > 0){
@@ -39,9 +54,10 @@ $(document).ready(function () {
     $('body').find('.js-ajax-form').submit(function (e) {
       var number = this.title.value
       e.preventDefault()
+      cursor_wait()
       var url = '/sky/event/'+eci+'/reading/journal/new_entry'
       $.getJSON(url, formToJSON(this), function () {
-        alert('Recorded this: '+number)
+        remove_cursor_wait()
         location.reload()
       })
     })
@@ -59,6 +75,7 @@ label {
   vertical-align: top;
   margin-bottom: 5px;
 }
+.cursor-wait { cursor: wait !important; }
     </style>
   </head>
   <body>
